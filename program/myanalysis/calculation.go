@@ -3,8 +3,8 @@ package myanalysis
 import (
 	"math"
 
-	"github.com/SrJMaia/expert-advisor/conversion"
-	"github.com/SrJMaia/expert-advisor/mystats"
+	"github.com/SrJMaia/expert-advisor/program/conversion"
+	"github.com/SrJMaia/expert-advisor/program/mystats"
 )
 
 const constRisk = 0.5

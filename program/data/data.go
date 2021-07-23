@@ -7,8 +7,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/SrJMaia/expert-advisor/conversion"
-	"github.com/SrJMaia/expert-advisor/table"
+	"github.com/SrJMaia/expert-advisor/program/conversion"
+	"github.com/SrJMaia/expert-advisor/program/table"
 )
 
 type LayoutData struct {

@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/SrJMaia/expert-advisor/check"
-	"github.com/SrJMaia/expert-advisor/table"
+	"github.com/SrJMaia/expert-advisor/program/check"
+	"github.com/SrJMaia/expert-advisor/program/table"
 )
 
 func ReadData(filePath string, myData *LayoutData) {

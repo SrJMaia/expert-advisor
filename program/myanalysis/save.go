@@ -7,9 +7,9 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/SrJMaia/expert-advisor/check"
-	"github.com/SrJMaia/expert-advisor/mystats"
-	"github.com/SrJMaia/expert-advisor/table"
+	"github.com/SrJMaia/expert-advisor/program/check"
+	"github.com/SrJMaia/expert-advisor/program/mystats"
+	"github.com/SrJMaia/expert-advisor/program/table"
 )
 
 func SaveOtimization(results *LayoutAnalysis, fileName string, stage string) {

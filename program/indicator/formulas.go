@@ -3,8 +3,8 @@ package indicator
 import (
 	"math"
 
-	"github.com/SrJMaia/expert-advisor/conversion"
-	"github.com/SrJMaia/expert-advisor/mymath"
+	"github.com/SrJMaia/expert-advisor/program/conversion"
+	"github.com/SrJMaia/expert-advisor/program/mymath"
 )
 
 func Decycler(price *[]float64, cutoff float64, jpy bool) []float64 {

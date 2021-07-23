@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/SrJMaia/expert-advisor/data"
-	"github.com/SrJMaia/expert-advisor/mystats"
-	"github.com/SrJMaia/expert-advisor/table"
+	"github.com/SrJMaia/expert-advisor/program/data"
+	"github.com/SrJMaia/expert-advisor/program/mystats"
+	"github.com/SrJMaia/expert-advisor/program/table"
 )
 
 func StrategyOneDecyclerPriceSingleCross(myData *data.LayoutData, cutoff float64, tf string, jpy bool) {

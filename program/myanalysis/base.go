@@ -5,9 +5,9 @@ import (
 	"math"
 	"os"
 
-	"github.com/SrJMaia/expert-advisor/conversion"
-	"github.com/SrJMaia/expert-advisor/mystats"
-	"github.com/SrJMaia/expert-advisor/table"
+	"github.com/SrJMaia/expert-advisor/program/conversion"
+	"github.com/SrJMaia/expert-advisor/program/mystats"
+	"github.com/SrJMaia/expert-advisor/program/table"
 )
 
 type LayoutAnalysis struct {

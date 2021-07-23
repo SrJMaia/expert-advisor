@@ -4,8 +4,8 @@ import (
 	"log"
 	"math"
 
-	"github.com/SrJMaia/expert-advisor/conversion"
-	"github.com/SrJMaia/expert-advisor/data"
+	"github.com/SrJMaia/expert-advisor/program/conversion"
+	"github.com/SrJMaia/expert-advisor/program/data"
 )
 
 type backtestVariables struct {

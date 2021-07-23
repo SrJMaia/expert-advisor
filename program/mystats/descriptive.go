@@ -4,7 +4,7 @@ import (
 	"math"
 	"sort"
 
-	"github.com/SrJMaia/expert-advisor/conversion"
+	"github.com/SrJMaia/expert-advisor/program/conversion"
 )
 
 func Quartile(s []float64) (float64, float64) {

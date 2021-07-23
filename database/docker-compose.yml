@@ -1,0 +1,15 @@
+version: '3.1'
+
+services:
+  db:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: prices
+    ports:
+      - "3307:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+volumes:
+   dbdata:

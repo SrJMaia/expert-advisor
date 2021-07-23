@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/SrJMaia/expert-advisor/data"
-	"github.com/SrJMaia/expert-advisor/myanalysis"
-	"github.com/SrJMaia/expert-advisor/table"
+	"github.com/SrJMaia/expert-advisor/program/data"
+	"github.com/SrJMaia/expert-advisor/program/myanalysis"
+	"github.com/SrJMaia/expert-advisor/program/table"
 )
 
 func stepsLoop(tf string) (float64, float64) {

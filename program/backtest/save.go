@@ -6,7 +6,7 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/SrJMaia/expert-advisor/check"
+	"github.com/SrJMaia/expert-advisor/program/check"
 )
 
 func SaveBacktest(tot *[]float64, buy *[]float64, sell *[]float64, columns string) {
