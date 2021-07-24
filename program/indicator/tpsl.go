@@ -10,26 +10,17 @@ import (
 	"github.com/SrJMaia/expert-advisor/program/table"
 )
 
-func FixTpsl(myData *data.LayoutData, value float64, timeFrame string, jpy bool) {
-	// Return with the size of dt
-	start := time.Now()
-	(*myData).Tpsl = make([]float64, len((*myData).Time))
-	var realValue float64
-	if jpy {
-		realValue = conversion.Round(value/100, 3)
-	} else {
-		realValue = conversion.Round(value/10000, 5)
+func GetTPSL(myData *data.LayoutData, tpslType string, fixValue float64, averageAtrPeriod int, timeFrame string, jpy bool) {
+	if tpslType == "fix" {
+		(*myData).TpslFix = conversion.RoundIsJpy(fixValue, jpy)
+		(*myData).IsFixTpsl = true
+	} else if tpslType == "atr" {
+		atrTpsl(myData, averageAtrPeriod, timeFrame, jpy)
+		(*myData).IsFixTpsl = false
 	}
-
-	for i := range (*myData).Time {
-		(*myData).Tpsl[i] = realValue
-	}
-
-	elapsed := time.Since(start)
-	table.StartBody("Successfully Created TPSL.", elapsed)
 }
 
-func AtrTpsl(myData *data.LayoutData, averagePeriod int, timeFrame string, jpy bool) {
+func atrTpsl(myData *data.LayoutData, averagePeriod int, timeFrame string, jpy bool) {
 	start := time.Now()
 	var closeValues []float64 = data.RawTimeFrame(&myData.Close, &myData.Time, timeFrame)
 	var highValues = data.RawTimeFrame(&myData.High, &myData.Time, timeFrame)
@@ -54,23 +45,16 @@ func AtrTpsl(myData *data.LayoutData, averagePeriod int, timeFrame string, jpy b
 			averageValue += realValue[i-j]
 		}
 		averageValue = averageValue / float64(averagePeriod)
-		if jpy {
-			tpsl[i] = conversion.Round(averageValue, 3)
-		} else {
-			tpsl[i] = conversion.Round(averageValue, 5)
-		}
+
+		tpsl[i] = conversion.RoundIsJpy(averageValue, jpy)
+
 	}
 
-	var avg float64
-	if jpy {
-		avg = conversion.Round(mystats.Mean(tpsl), 3)
-	} else {
-		avg = conversion.Round(mystats.Mean(tpsl), 5)
-	}
+	var averageAtr = conversion.RoundIsJpy(mystats.Mean(tpsl), jpy)
 
-	tpsl = conversion.FillWithValue(tpsl, 0, avg)
+	tpsl = conversion.FillWithValue(tpsl, 0, averageAtr)
 
-	(*myData).Tpsl, _ = data.NormalizeTimeFrameFloat(&tpsl, &myData.Time, timeFrame)
+	(*myData).TpslNonFix, _ = data.NormalizeTimeFrameFloat(&tpsl, &myData.Time, timeFrame)
 
 	elapsed := time.Since(start)
 	table.StartBody("Successfully Created TPSL.", elapsed)

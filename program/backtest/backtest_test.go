@@ -23,16 +23,16 @@ func TestHedgingBacktest(t *testing.T) {
 	*/
 	// EUR HEDGING
 	var myData = data.LayoutData{
-		Open:     []float64{1.001, 1.002, 1.003, 1.004, 1.005, 1.006},
-		High:     []float64{1.003, 1.004, 1.005, 1.006, 1.007, 1.008},
-		Low:      []float64{1.000, 1.001, 1.002, 1.003, 1.004, 1.005},
-		Close:    []float64{1.002, 1.003, 1.004, 1.005, 1.006, 1.007},
-		PriceTf:  []float64{1.001, 1.002, 1.002, 1.002, 1.002, 1.002},
-		Tpsl:     []float64{0.001, 0.001, 0.001, 0.001, 0.001, 0.001},
-		BuyFlag:  []bool{true, true, true, false, false, false},
-		SellFlag: []bool{false, true, true, true, false, false},
-		SizeBuy:  3,
-		SizeSell: 3,
+		Open:       []float64{1.001, 1.002, 1.003, 1.004, 1.005, 1.006},
+		High:       []float64{1.003, 1.004, 1.005, 1.006, 1.007, 1.008},
+		Low:        []float64{1.000, 1.001, 1.002, 1.003, 1.004, 1.005},
+		Close:      []float64{1.002, 1.003, 1.004, 1.005, 1.006, 1.007},
+		PriceTf:    []float64{1.001, 1.002, 1.002, 1.002, 1.002, 1.002},
+		TpslNonFix: []float64{0.001, 0.001, 0.001, 0.001, 0.001, 0.001},
+		BuyFlag:    []bool{true, true, true, false, false, false},
+		SellFlag:   []bool{false, true, true, true, false, false},
+		SizeBuy:    3,
+		SizeSell:   3,
 	}
 	var capital = 100000.
 	var pValue = 0.0001 // Even 0.01c can make a huge difference in higher interests
@@ -98,16 +98,16 @@ func TestHedgingBacktest(t *testing.T) {
 
 	// EUR NoTpSL
 	myData = data.LayoutData{
-		Open:     []float64{1.001, 1.002, 1.003, 1.004, 1.005, 1.006},
-		High:     []float64{1.003, 1.004, 1.005, 1.006, 1.007, 1.008},
-		Low:      []float64{1.000, 1.001, 1.002, 1.003, 1.004, 1.005},
-		Close:    []float64{1.002, 1.003, 1.004, 1.005, 1.006, 1.007},
-		PriceTf:  []float64{1.001, 1.002, 1.002, 1.003, 1.003, 1.004},
-		Tpsl:     []float64{0.001, 0.001, 0.001, 0.001, 0.001, 0.001},
-		BuyFlag:  []bool{false, true, false, false, false, true},
-		SellFlag: []bool{false, false, false, true, false, false},
-		SizeBuy:  3,
-		SizeSell: 3,
+		Open:       []float64{1.001, 1.002, 1.003, 1.004, 1.005, 1.006},
+		High:       []float64{1.003, 1.004, 1.005, 1.006, 1.007, 1.008},
+		Low:        []float64{1.000, 1.001, 1.002, 1.003, 1.004, 1.005},
+		Close:      []float64{1.002, 1.003, 1.004, 1.005, 1.006, 1.007},
+		PriceTf:    []float64{1.001, 1.002, 1.002, 1.003, 1.003, 1.004},
+		TpslNonFix: []float64{0.001, 0.001, 0.001, 0.001, 0.001, 0.001},
+		BuyFlag:    []bool{false, true, false, false, false, true},
+		SellFlag:   []bool{false, false, false, true, false, false},
+		SizeBuy:    3,
+		SizeSell:   3,
 	}
 
 	_, buy, sell = NoTpslBacktest(&myData, capital, false, false)
@@ -135,16 +135,16 @@ func TestHedgingBacktest(t *testing.T) {
 
 	// JPY HEDGING
 	myData = data.LayoutData{
-		Open:     []float64{123.1, 123.2, 123.3, 123.4, 123.5, 123.6},
-		High:     []float64{123.3, 123.4, 123.5, 123.6, 123.7, 123.8},
-		Low:      []float64{123.0, 123.1, 123.2, 123.3, 123.4, 123.5},
-		Close:    []float64{123.2, 123.3, 123.4, 123.5, 123.6, 123.7},
-		PriceTf:  []float64{123.1, 123.2, 123.2, 123.2, 123.2, 123.2},
-		Tpsl:     []float64{0.1, 0.1, 0.1, 0.1, 0.1, 0.1},
-		BuyFlag:  []bool{true, true, true, false, false, false},
-		SellFlag: []bool{false, true, true, true, false, false},
-		SizeBuy:  3,
-		SizeSell: 3,
+		Open:       []float64{123.1, 123.2, 123.3, 123.4, 123.5, 123.6},
+		High:       []float64{123.3, 123.4, 123.5, 123.6, 123.7, 123.8},
+		Low:        []float64{123.0, 123.1, 123.2, 123.3, 123.4, 123.5},
+		Close:      []float64{123.2, 123.3, 123.4, 123.5, 123.6, 123.7},
+		PriceTf:    []float64{123.1, 123.2, 123.2, 123.2, 123.2, 123.2},
+		TpslNonFix: []float64{0.1, 0.1, 0.1, 0.1, 0.1, 0.1},
+		BuyFlag:    []bool{true, true, true, false, false, false},
+		SellFlag:   []bool{false, true, true, true, false, false},
+		SizeBuy:    3,
+		SizeSell:   3,
 	}
 	tot, buy, sell = HedgingBacktest(&myData, 3., 1., capital, true, false)
 
@@ -207,16 +207,16 @@ func TestHedgingBacktest(t *testing.T) {
 
 	// JPY NoTpSL
 	myData = data.LayoutData{
-		Open:     []float64{123.1, 123.2, 123.3, 123.4, 123.5, 123.6},
-		High:     []float64{123.3, 123.4, 123.5, 123.6, 123.7, 123.8},
-		Low:      []float64{123.0, 123.1, 123.2, 123.3, 123.4, 123.5},
-		Close:    []float64{123.2, 123.3, 123.4, 123.5, 123.6, 123.7},
-		PriceTf:  []float64{123.1, 123.2, 123.2, 123.3, 123.3, 123.4},
-		Tpsl:     []float64{0.1, 0.1, 0.1, 0.1, 0.1, 0.1},
-		BuyFlag:  []bool{false, true, false, false, false, true},
-		SellFlag: []bool{false, false, false, true, false, false},
-		SizeBuy:  3,
-		SizeSell: 3,
+		Open:       []float64{123.1, 123.2, 123.3, 123.4, 123.5, 123.6},
+		High:       []float64{123.3, 123.4, 123.5, 123.6, 123.7, 123.8},
+		Low:        []float64{123.0, 123.1, 123.2, 123.3, 123.4, 123.5},
+		Close:      []float64{123.2, 123.3, 123.4, 123.5, 123.6, 123.7},
+		PriceTf:    []float64{123.1, 123.2, 123.2, 123.3, 123.3, 123.4},
+		TpslNonFix: []float64{0.1, 0.1, 0.1, 0.1, 0.1, 0.1},
+		BuyFlag:    []bool{false, true, false, false, false, true},
+		SellFlag:   []bool{false, false, false, true, false, false},
+		SizeBuy:    3,
+		SizeSell:   3,
 	}
 
 	tot, buy, sell = NoTpslBacktest(&myData, capital, false, false)
@@ -296,29 +296,30 @@ func TestCheckTpslExit(t *testing.T) {
 
 }
 
-func TestTpslCalculationNonFix(t *testing.T) {
+func TestTpslCalculation(t *testing.T) {
+	var backtestMain = backtestHeart(1000, 10, 10)
 	var multiplyValue = 0.001
 	var price = 1.123
 	var multiplyTp = 2.5
 	var multiplySl = 1.25
 	var jpy = false
 	var buy = true
-	var tp, sl = tpslCalculationNonFix(price, multiplyTp, multiplySl, multiplyValue, jpy, buy)
-	if tp != 1.1255 {
-		t.Error("EUR - BUY - Expected:", 1.1255, "Got:", tp)
-	} else if sl != 1.12175 {
-		t.Error("EUR - BUY - Expected:", 1.12175, "Got:", sl)
+	tpslCalculation(&backtestMain, price, multiplyTp, multiplySl, multiplyValue, jpy, buy)
+	if backtestMain.tpBuy != 1.1255 {
+		t.Error("EUR - BUY - Expected:", 1.1255, "Got:", backtestMain.tpBuy)
+	} else if backtestMain.slBuy != 1.12175 {
+		t.Error("EUR - BUY - Expected:", 1.12175, "Got:", backtestMain.slBuy)
 	}
 	price = 1.123
 	multiplyTp = 2.5
 	multiplySl = 1.25
 	jpy = false
 	buy = false
-	tp, sl = tpslCalculationNonFix(price, multiplyTp, multiplySl, multiplyValue, jpy, buy)
-	if tp != 1.1205 {
-		t.Error("EUR - SELL - Expected:", 1.1205, "Got:", tp)
-	} else if sl != 1.12425 {
-		t.Error("EUR - SELL - Expected:", 1.12425, "Got:", sl)
+	tpslCalculation(&backtestMain, price, multiplyTp, multiplySl, multiplyValue, jpy, buy)
+	if backtestMain.tpSell != 1.1205 {
+		t.Error("EUR - SELL - Expected:", 1.1205, "Got:", backtestMain.tpSell)
+	} else if backtestMain.slSell != 1.12425 {
+		t.Error("EUR - SELL - Expected:", 1.12425, "Got:", backtestMain.slSell)
 	}
 
 	multiplyValue = 0.1
@@ -327,95 +328,121 @@ func TestTpslCalculationNonFix(t *testing.T) {
 	multiplySl = 1.25
 	jpy = true
 	buy = true
-	tp, sl = tpslCalculationNonFix(price, multiplyTp, multiplySl, multiplyValue, jpy, buy)
-	if tp != 123.706 {
-		t.Error("JPY - BUY - Expected:", 123.706, "Got:", tp)
-	} else if sl != 123.331 {
-		t.Error("JPY - BUY - Expected:", 123.331, "Got:", sl)
+	tpslCalculation(&backtestMain, price, multiplyTp, multiplySl, multiplyValue, jpy, buy)
+	if backtestMain.tpBuy != 123.706 {
+		t.Error("JPY - BUY - Expected:", 123.706, "Got:", backtestMain.tpBuy)
+	} else if backtestMain.slBuy != 123.331 {
+		t.Error("JPY - BUY - Expected:", 123.331, "Got:", backtestMain.slBuy)
 	}
 	price = 123.456
 	multiplyTp = 2.5
 	multiplySl = 1.25
 	jpy = true
 	buy = false
-	tp, sl = tpslCalculationNonFix(price, multiplyTp, multiplySl, multiplyValue, jpy, buy)
-	if tp != 123.206 {
-		t.Error("JPY - SELL - Expected:", 123.206, "Got:", tp)
-	} else if sl != 123.581 {
-		t.Error("JPY - SELL - Expected:", 123.581, "Got:", sl)
+	tpslCalculation(&backtestMain, price, multiplyTp, multiplySl, multiplyValue, jpy, buy)
+	if backtestMain.tpSell != 123.206 {
+		t.Error("JPY - SELL - Expected:", 123.206, "Got:", backtestMain.tpSell)
+	} else if backtestMain.slSell != 123.581 {
+		t.Error("JPY - SELL - Expected:", 123.581, "Got:", backtestMain.slSell)
 	}
-}
-
-func TestTpslCalculationFix(t *testing.T) {
-	var price = 1.123
-	var multiplyTp = 0.001 * 2.5
-	var multiplySl = 0.001 * 1.25
-	var jpy = false
-	var buy = true
-	var tp, sl = tpslCalculationFix(price, multiplyTp, multiplySl, jpy, buy)
-	if tp != 1.1255 {
-		t.Error("EUR - BUY - Expected:", 1.1255, "Got:", tp)
-	} else if sl != 1.12175 {
-		t.Error("EUR - BUY - Expected:", 1.12175, "Got:", sl)
-	}
-	price = 1.123
-	multiplyTp = 0.001 * 2.5
-	multiplySl = 0.001 * 1.25
-	jpy = false
-	buy = false
-	tp, sl = tpslCalculationFix(price, multiplyTp, multiplySl, jpy, buy)
-	if tp != 1.1205 {
-		t.Error("EUR - SELL - Expected:", 1.1205, "Got:", tp)
-	} else if sl != 1.12425 {
-		t.Error("EUR - SELL - Expected:", 1.12425, "Got:", sl)
-	}
-
-	price = 123.456
-	multiplyTp = 0.1 * 2.5
-	multiplySl = 0.1 * 1.25
-	jpy = true
-	buy = true
-	tp, sl = tpslCalculationFix(price, multiplyTp, multiplySl, jpy, buy)
-	if tp != 123.706 {
-		t.Error("JPY - BUY - Expected:", 123.706, "Got:", tp)
-	} else if sl != 123.331 {
-		t.Error("JPY - BUY - Expected:", 123.331, "Got:", sl)
-	}
-	price = 123.456
-	multiplyTp = 0.1 * 2.5
-	multiplySl = 0.1 * 1.25
-	jpy = true
-	buy = false
-	tp, sl = tpslCalculationFix(price, multiplyTp, multiplySl, jpy, buy)
-	if tp != 123.206 {
-		t.Error("JPY - SELL - Expected:", 123.206, "Got:", tp)
-	} else if sl != 123.581 {
-		t.Error("JPY - SELL - Expected:", 123.581, "Got:", sl)
-	}
-
 }
 
 func TestFinanceCalculation(t *testing.T) {
-	var balance = 1000.
-	var initialBalance = 1000.
 	var leverage = false
-	var initialPrice = 1.124
-	var finalPrice = 1.123
-	var eurPrice = 1.124
-	var total, result = financeCalculation(balance, initialPrice, finalPrice, eurPrice, initialBalance, leverage)
-	if result != 0.81968 {
-		t.Error("EUR - Expected:", 0.81968, "Got:", result)
-	} else if total != 1000.82 {
-		t.Error("EUR - Expected:", 1000.82, "Got:", total)
+
+	var backtestMain = backtestHeart(1000., 10, 10)
+	var jpy = false
+
+	backtestMain.tpBuy = 1.124
+	backtestMain.buyPrice = 1.123
+	financeCalculation(&backtestMain, leverage, jpy, "buy-tp")
+	if backtestMain.buyResult != 0.81968 {
+		t.Error("EUR BUY TP - Expected:", 0.81968, "Got:", backtestMain.buyResult)
 	}
-	initialPrice = 127.204
-	finalPrice = 127.124
-	eurPrice = 113.550
-	total, result = financeCalculation(balance, initialPrice, finalPrice, eurPrice, initialBalance, leverage)
-	if result != 0.63454 {
-		t.Error("JPY - Expected:", 0.63454, "Got:", result)
-	} else if total != 1000.63 {
-		t.Error("JPY - Expected:", 1000.63, "Got:", total)
+	if backtestMain.capital != 1000.82 {
+		t.Error("EUR BUY TP - Expected:", 1000.82, "Got:", backtestMain.capital)
+	}
+
+	backtestMain = backtestHeart(1000., 10, 10)
+	backtestMain.slBuy = 1.122
+	backtestMain.buyPrice = 1.123
+	financeCalculation(&backtestMain, leverage, jpy, "buy-sl")
+	if backtestMain.buyResult != -0.96127 {
+		t.Error("EUR BUY SL - Expected:", -0.96127, "Got:", backtestMain.buyResult)
+	}
+	if backtestMain.capital != 999.04 {
+		t.Error("EUR BUY SL - Expected:", 999.04, "Got:", backtestMain.capital)
+	}
+
+	backtestMain = backtestHeart(1000., 10, 10)
+	backtestMain.tpSell = 1.122
+	backtestMain.sellPrice = 1.123
+	financeCalculation(&backtestMain, leverage, jpy, "sell-tp")
+	if backtestMain.sellResult != 0.82127 {
+		t.Error("EUR SELL TP - Expected:", 0.82127, "Got:", backtestMain.sellResult)
+	}
+	if backtestMain.capital != 1000.82 {
+		t.Error("EUR SELL TP - Expected:", 1000.82, "Got:", backtestMain.capital)
+	}
+
+	backtestMain = backtestHeart(1000., 10, 10)
+	backtestMain.slSell = 1.124
+	backtestMain.sellPrice = 1.123
+	financeCalculation(&backtestMain, leverage, jpy, "sell-sl")
+	if backtestMain.sellResult != -0.95968 {
+		t.Error("EUR SELL SL - Expected:", -0.95968, "Got:", backtestMain.sellResult)
+	}
+	if backtestMain.capital != 999.04 {
+		t.Error("EUR SELL SL - Expected:", 999.04, "Got:", backtestMain.capital)
+	}
+
+	// JPY
+	backtestMain = backtestHeart(1000., 10, 10)
+	backtestMain.tpBuy = 127.204
+	backtestMain.buyPrice = 127.124
+	jpy = true
+	financeCalculation(&backtestMain, leverage, jpy, "buy-tp")
+	if backtestMain.buyResult != 0.559 {
+		t.Error("JPY BUY TP - Expected:", 0.559, "Got:", backtestMain.buyResult)
+	}
+	if backtestMain.capital != 1000.56 {
+		t.Error("JPY BUY TP - Expected:", 1000.56, "Got:", backtestMain.capital)
+	}
+
+	backtestMain = backtestHeart(1000., 10, 10)
+	backtestMain.slBuy = 127.05
+	backtestMain.buyPrice = 127.1
+	jpy = true
+	financeCalculation(&backtestMain, leverage, jpy, "buy-sl")
+	if backtestMain.buyResult != -0.464 {
+		t.Error("JPY BUY SL - Expected:", -0.464, "Got:", backtestMain.buyResult)
+	}
+	if backtestMain.capital != 999.54 {
+		t.Error("JPY BUY SL - Expected:", 999.54, "Got:", backtestMain.capital)
+	}
+
+	backtestMain = backtestHeart(1000., 10, 10)
+	backtestMain.tpSell = 127.05
+	backtestMain.sellPrice = 127.1
+	jpy = true
+	financeCalculation(&backtestMain, leverage, jpy, "sell-tp")
+	if backtestMain.sellResult != 0.324 {
+		t.Error("JPY SELL TP - Expected:", 0.324, "Got:", backtestMain.sellResult)
+	}
+	if backtestMain.capital != 1000.32 {
+		t.Error("JPY SELL TP - Expected:", 1000.32, "Got:", backtestMain.capital)
+	}
+
+	backtestMain = backtestHeart(1000., 10, 10)
+	backtestMain.slSell = 127.1
+	backtestMain.sellPrice = 127.05
+	jpy = true
+	financeCalculation(&backtestMain, leverage, jpy, "sell-sl")
+	if backtestMain.sellResult != -0.463 {
+		t.Error("JPY SELL SL - Expected:", -0.463, "Got:", backtestMain.sellResult)
+	}
+	if backtestMain.capital != 999.54 {
+		t.Error("JPY SELL SL - Expected:", 999.54, "Got:", backtestMain.capital)
 	}
 
 }

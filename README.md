@@ -1,19 +1,17 @@
 # expert-advisor  
 
 ### Implementations  
-- Create a function called roundIsJpy  
-- Probably my annualized return is wrong  
+- In backtestHear change to return a pointer 
+- Instead returning three slices, return a struct in backtest  
+- Unit test finance calculation improve  
+Mudar backtest?
+    - Após checar se o candle é do tf ou nao, ou seja, o primeiro if else
+    - Dividir o codigo posterior em pequenas funções, e chamar cada uma no qual queira
+- Delete read csv ?  
 - I could add a trade per day?  
-- Delete csv  
-- Put the docker inside git  and organize the files  
-- Change data to read the csv and throw inside database with paramaters datehour format and the name metatrader to get only the important  
-- Check if the data sended is the len of the csvLines  
-- Inside the database, puts H30 H1 H4 H12? D1 hours raw and formated to m1  
-- Backup database  
-- Maybe change the backtest?  
+- Change the backtest
 - Add binance?  
 - Create plot library  
-
 
 ### Bugs
 - 001  

@@ -32,6 +32,13 @@ func IntToBool(i int) bool {
 	return false
 }
 
+func RoundIsJpy(f float64, isJpy bool) float64 {
+	if isJpy {
+		return Round(f, 3)
+	}
+	return Round(f, 5)
+}
+
 func Round(f float64, p int) float64 {
 	y := strconv.FormatFloat(f, 'f', p, 64)
 	r, _ := strconv.ParseFloat(y, 64)
