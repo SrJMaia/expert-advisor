@@ -102,6 +102,14 @@ func FilterOtimization(results *LayoutAnalysis, capital float64, sizeTf float64,
 
 	printResults(results)
 
+	drawdownOverX(&mainVariables, results, -40.)
+
+	UpdateAnalysisStruct(results, mainVariables.indexSelection)
+
+	stopAnalysis(len(mainVariables.indexSelection))
+
+	printResults(results)
+
 	if save {
 		SaveOtimization(results, "CutedOtimization.csv", "After Cut")
 	}
@@ -119,6 +127,24 @@ func printResults(results *LayoutAnalysis) {
 	printDistribution("NET PROFIT", (*results).NetProfit)
 	printDistribution("TOTAL TRADES", (*results).TotalTrades)
 	printDistribution("ANNUALIZED RETURN", (*results).PercentAnnualizedReturn)
+	printDistribution("DRAWDOWN PERCENT", (*results).MaxDrawdownPercent)
+}
+
+func drawdownOverX(mainVariables *filterVariables, results *LayoutAnalysis, cut float64) {
+	var newIndexes []int
+	for i, v := range (*results).MaxDrawdownPercent {
+		if v > cut {
+			newIndexes = append(newIndexes, i)
+		}
+	}
+	(*mainVariables).indexSelection = newIndexes
+	(*mainVariables).afterCut = len((*mainVariables).indexSelection)
+	table.AnalysisBody(
+		fmt.Sprint("Drawdown Perct Cut - From ",
+			(*mainVariables).befoneCut, " indexes, ",
+			(*mainVariables).afterCut, " will continue."),
+		"white")
+	(*mainVariables).befoneCut = (*mainVariables).afterCut
 }
 
 func annualizedRetOverX(mainVariables *filterVariables, results *LayoutAnalysis, cut float64) {

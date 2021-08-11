@@ -9,6 +9,55 @@ import (
 	"github.com/SrJMaia/expert-advisor/program/table"
 )
 
+func HigherLower(myData *data.LayoutData, period float64, cutoff float64, tf string, jpy bool) {
+	var start = time.Now()
+	var newPrice = data.RawTimeFrame(&myData.Open, &myData.Time, tf)
+	var newHigh = data.RawTimeFrame(&myData.High, &myData.Time, tf)
+	var newLow = data.RawTimeFrame(&myData.Low, &myData.Time, tf)
+	var buy = make([]bool, len(newPrice))
+	var sell = make([]bool, len(newPrice))
+	var decycler = Decycler(&newPrice, cutoff, jpy)
+	var testMax = make([]float64, len(newPrice))
+	var testMin = make([]float64, len(newPrice))
+	var sizeBuy uint32
+	var sizeSell uint32
+	var lowestPrice float64
+	var highestPrice float64
+	for i := range newPrice {
+		if i < int(period) {
+			buy[i] = false
+			sell[i] = false
+			testMax[i] = 0.
+			testMin[i] = 0.
+			continue
+		}
+		highestPrice, _ = mystats.MaxMin(newHigh[i-int(period) : i])
+		_, lowestPrice = mystats.MaxMin(newLow[i-int(period) : i])
+		testMax[i] = highestPrice
+		testMin[i] = lowestPrice
+		if newPrice[i] < lowestPrice && newPrice[i-1] > lowestPrice && decycler[i] < newPrice[i] {
+			sell[i] = true
+			sizeSell++
+		} else {
+			sell[i] = false
+		}
+		if newPrice[i] > highestPrice && newPrice[i-1] < highestPrice && decycler[i] > newPrice[i] {
+			buy[i] = true
+			sizeBuy++
+		} else {
+			buy[i] = false
+		}
+	}
+	(*myData).BuyFlag = data.NormalizeTimeFrameBool(&buy, &myData.Time, tf)
+	(*myData).SellFlag = data.NormalizeTimeFrameBool(&sell, &myData.Time, tf)
+	(*myData).TestMax, _ = data.NormalizeTimeFrameFloat(&testMax, &myData.Time, tf)
+	(*myData).TestMin, _ = data.NormalizeTimeFrameFloat(&testMin, &myData.Time, tf)
+	(*myData).SizeBuy = sizeBuy + 1
+	(*myData).SizeSell = sizeSell + 1
+	var elapsed = time.Since(start)
+	table.StartBody(fmt.Sprint("Successfully Created Strategy - Higher Lower - ", "Buy: ", sizeBuy, " ", "Sell: ", sizeSell), elapsed)
+}
+
 func StrategyOneDecyclerPriceSingleCross(myData *data.LayoutData, cutoff float64, tf string, jpy bool) {
 	// Heging - Fix TPSL 10  - TPSL = 19 2.5 - slow i=240 fast j=210 Mostraram resultados promissores
 	// Hedging - ATR TPSL  shows more interesting
@@ -24,6 +73,7 @@ func StrategyOneDecyclerPriceSingleCross(myData *data.LayoutData, cutoff float64
 		if i < 1 {
 			buy[i] = false
 			sell[i] = false
+			continue
 		}
 		if decycler[i] > newPrice[i] && decycler[i-1] < newPrice[i-1] {
 			buy[i] = true

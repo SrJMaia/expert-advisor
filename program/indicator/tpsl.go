@@ -12,6 +12,11 @@ import (
 
 func GetTPSL(myData *data.LayoutData, tpslType string, fixValue float64, averageAtrPeriod int, timeFrame string, jpy bool) {
 	if tpslType == "fix" {
+		if jpy {
+			fixValue = fixValue / 100
+		} else {
+			fixValue = fixValue / 10000
+		}
 		(*myData).TpslFix = conversion.RoundIsJpy(fixValue, jpy)
 		(*myData).IsFixTpsl = true
 	} else if tpslType == "atr" {

@@ -2,15 +2,18 @@ package table
 
 import (
 	"fmt"
+	"log"
 	"strings"
 	"time"
 	"unicode/utf8"
+
+	"github.com/SrJMaia/expert-advisor/program/conversion"
 )
 
 const (
-	lengthToPrint     = 150
+	lengthToPrint     = 160
 	halfLengthToPrint = lengthToPrint / 2
-	lengthOfTime      = 15
+	lengthOfTime      = 20
 
 	// ANSI Scape Color
 	black      = "\u001b[1;30m"
@@ -58,21 +61,35 @@ func Distribution(name string, minValue float64, q1 float64, medianValue float64
 	NewDivisor()
 }
 
-func LoopStepsPrint(steps ...float64) {
+func LoopStepsPrint(elapsed time.Duration, method string, steps ...float64) {
 	var message = "Step Number: "
 	for i := range steps {
 		if i < 1 {
-			message += fmt.Sprint(steps[i])
+			message += fmt.Sprint(conversion.Round(steps[i], 4))
 			continue
 		}
 		message = message + " - " + fmt.Sprint(steps[i])
 	}
-	if utf8.RuneCountInString(message)%2 != 0 {
-		message = " " + message
+	var strTime = fmt.Sprint(elapsed)
+	var finalSize = lengthOfTime - utf8.RuneCountInString(strTime)
+	var finalSpaces = strings.Repeat(" ", finalSize)
+	var size = lengthToPrint - (utf8.RuneCountInString("| Time: |") + utf8.RuneCountInString(message) + utf8.RuneCountInString(strTime) + finalSize)
+	var spaces = strings.Repeat(" ", size)
+	if method == "outside" {
+		fmt.Print(string(blue), "| ", string(colorReset),
+			string(cyan), message, spaces, string(colorReset),
+			string(blue), "| ", string(colorReset),
+			string(yellow), "Time: ", elapsed, finalSpaces, string(yellow),
+			string(blue), "|\n", string(colorReset))
+	} else if method == "inside" {
+		fmt.Print(string(blue), "| ", string(colorReset),
+			string(red), message, spaces, string(colorReset),
+			string(blue), "| ", string(colorReset),
+			string(yellow), "Time: ", elapsed, finalSpaces, string(yellow),
+			string(blue), "|\n", string(colorReset))
+	} else {
+		log.Panic("Loop Steps Print Method Wrong.")
 	}
-	var size = (lengthToPrint - utf8.RuneCountInString(message)) / 2
-	var symbol = strings.Repeat(" ", size) + message + strings.Repeat(" ", size)
-	fmt.Print(string(blue), "|", string(colorReset), string(red), symbol, string(colorReset), string(blue), "|\n", string(colorReset))
 	NewDivisor()
 }
 

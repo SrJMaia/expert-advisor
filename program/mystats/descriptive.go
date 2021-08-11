@@ -105,6 +105,23 @@ func Min(n ...float64) float64 {
 	return n[0]
 }
 
+func MaxMin(n []float64) (float64, float64) {
+	if len(n) == 0 {
+		return 0., 0.
+	}
+	var max float64
+	var min = math.MaxFloat64
+	for _, value := range n {
+		if value > max {
+			max = value
+		}
+		if value < min {
+			min = value
+		}
+	}
+	return max, min
+}
+
 func MinAboveZero(n ...float64) float64 {
 	var minValue float64
 	if len(n) == 1 {

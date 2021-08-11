@@ -12,26 +12,33 @@ import (
 )
 
 type LayoutData struct {
-	Time          []time.Time
-	TimeHour      []int
-	TimeMinutes   []int
-	TimeWeekDays  []int
-	Open          []float64
-	High          []float64
-	Low           []float64
-	Close         []float64
-	PriceTf       []float64
-	TpslNonFix    []float64
-	BuyFlag       []bool
-	SellFlag      []bool
-	TpslFix       float64
-	SizeBuy       uint32
-	SizeSell      uint32
-	SizeTimeFrame uint32
-	IsFixTpsl     bool
+	Time              []time.Time
+	TimeHour          []int
+	TimeMinutes       []int
+	TimeWeekDays      []int
+	Open              []float64
+	High              []float64
+	Low               []float64
+	Close             []float64
+	PriceTf           []float64
+	TpslNonFix        []float64
+	TestMax           []float64
+	TestMin           []float64
+	BuyFlag           []bool
+	SellFlag          []bool
+	TpslFix           float64
+	MultiplyTp        float64
+	MultiplySl        float64
+	ChannelInPips     float64
+	StartPointInPips  float64
+	MultiplyTpChannel float64
+	SizeBuy           uint32
+	SizeSell          uint32
+	SizeTimeFrame     uint32
+	IsFixTpsl         bool
 }
 
-func CheckLayoutData(data *LayoutData) {
+func CheckLayoutData(data *LayoutData, optimationType string) {
 	start := time.Now()
 	if data.Open == nil {
 		log.Panic("Data Open is nil")
@@ -41,11 +48,11 @@ func CheckLayoutData(data *LayoutData) {
 		log.Panic("Data Low is nil")
 	} else if data.Close == nil {
 		log.Panic("Data Close is nil")
-	} else if data.BuyFlag == nil {
+	} else if data.BuyFlag == nil && optimationType != "fimathe" && optimationType != "fimathe-with-strategy" {
 		log.Panic("Data BuyFlag is nil")
 	} else if data.PriceTf == nil {
 		log.Panic("Data PriceTf is nil")
-	} else if data.SellFlag == nil {
+	} else if data.SellFlag == nil && optimationType != "fimathe" && optimationType != "fimathe-with-strategy" {
 		log.Panic("Data SellFlag is nil")
 	} else if data.Time == nil {
 		log.Panic("Data Time is nil")
@@ -128,21 +135,25 @@ func NormalizeTimeFrameFloat(smallSlice *[]float64, timeValues *[]time.Time, tim
 	var normalizedSlice = make([]float64, len(*timeValues))
 	var size int
 
-	for i := range *smallSlice {
+	for i := range *timeValues {
 		if i == 0 {
-			normalizedSlice[i] = (*smallSlice)[i]
+			normalizedSlice[i] = (*smallSlice)[size]
 			size++
 			continue
 		}
 		if timeFrame == "H1" && (*timeValues)[i].Hour() != (*timeValues)[i-1].Hour() {
-			normalizedSlice[i] = (*smallSlice)[i]
+			normalizedSlice[i] = (*smallSlice)[size]
 			size++
 		} else if timeFrame == "D1" && (*timeValues)[i].Day() != (*timeValues)[i-1].Day() {
-			normalizedSlice[i] = (*smallSlice)[i]
+			normalizedSlice[i] = (*smallSlice)[size]
 			size++
 		} else {
 			normalizedSlice[i] = normalizedSlice[i-1]
 		}
+	}
+
+	if size != len(*smallSlice) {
+		log.Panic("Normalize Time Frmae Float Has Wrong Size. Size: ", size, " Slice: ", len(*smallSlice))
 	}
 
 	return normalizedSlice, size
@@ -150,27 +161,28 @@ func NormalizeTimeFrameFloat(smallSlice *[]float64, timeValues *[]time.Time, tim
 
 func NormalizeTimeFrameBool(smallSlice *[]bool, timeValues *[]time.Time, timeFrame string) []bool {
 	var normalizedSlice = make([]bool, len(*timeValues))
+	var indexSmallSlice uint32
 
-	for i := range *smallSlice {
+	for i := range *timeValues {
 		if i == 0 {
-			normalizedSlice[i] = (*smallSlice)[i]
+			normalizedSlice[i] = (*smallSlice)[indexSmallSlice]
+			indexSmallSlice++
 			continue
 		}
-		if timeFrame == "H1" {
-			if (*timeValues)[i].Hour() != (*timeValues)[i-1].Hour() {
-				normalizedSlice[i] = (*smallSlice)[i]
-			} else {
-				normalizedSlice[i] = normalizedSlice[i-1]
-			}
-		} else if timeFrame == "D1" {
-			if (*timeValues)[i].Day() != (*timeValues)[i-1].Day() {
-				normalizedSlice[i] = (*smallSlice)[i]
-			} else {
-				normalizedSlice[i] = normalizedSlice[i-1]
-			}
+		if timeFrame == "H1" && (*timeValues)[i].Hour() != (*timeValues)[i-1].Hour() {
+			normalizedSlice[i] = (*smallSlice)[indexSmallSlice]
+			indexSmallSlice++
+		} else if timeFrame == "D1" && (*timeValues)[i].Day() != (*timeValues)[i-1].Day() {
+			normalizedSlice[i] = (*smallSlice)[indexSmallSlice]
+			indexSmallSlice++
+		} else {
+			normalizedSlice[i] = normalizedSlice[i-1]
 		}
 	}
 
+	if int(indexSmallSlice) != len(*smallSlice) {
+		log.Panic("Normalize Time Frmae Bool Has Wrong Size. Size: ", indexSmallSlice, " Slice: ", len(*smallSlice))
+	}
 	return normalizedSlice
 }
 

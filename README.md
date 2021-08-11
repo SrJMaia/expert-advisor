@@ -1,15 +1,10 @@
 # expert-advisor  
 
 ### Implementations  
-- In backtestHear change to return a pointer 
-- Instead returning three slices, return a struct in backtest  
-- Unit test finance calculation improve  
-Mudar backtest?
-    - Após checar se o candle é do tf ou nao, ou seja, o primeiro if else
-    - Dividir o codigo posterior em pequenas funções, e chamar cada uma no qual queira
+- I need to have a flag called non eur and when i use a non eur currency pair, i need to pass eur price   
+- Instead returning three slices, return a struct in backtest  ?
 - Delete read csv ?  
 - I could add a trade per day?  
-- Change the backtest
 - Add binance?  
 - Create plot library  
 
