@@ -9,7 +9,7 @@ api_secret_real = "pdBDYEvzV2t1IWaoBl3XYNu5pzp2QUvAfMMhnm0pROYuzCLrHgSf1J42wpgyu
 
 client = Client(api_key_real, api_secret_real)
 
-print("-"*90)
+print("-"*90) 
 
 def expert_advisor(msg):
     flag_open_trade = True
