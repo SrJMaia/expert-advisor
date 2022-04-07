@@ -1,5 +1,5 @@
 # expert-advisor  
-
+Purpose: read data from database/api or csv, use indicators for a backtest and analysing the backtest.  
 
 # Disclaimer  
 
