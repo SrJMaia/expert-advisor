@@ -4,8 +4,8 @@ from binance import ThreadedWebsocketManager
 from binance.enums import *
 from binance.exceptions import BinanceAPIException, BinanceOrderException
 
-api_key_real    = "4DxDa3VoWiDDLbzE8rsJ9OEOrQdXOjB5vKBAMPtJEHkkuKfcZLKKqEqN37Dxhgm3"
-api_secret_real = "pdBDYEvzV2t1IWaoBl3XYNu5pzp2QUvAfMMhnm0pROYuzCLrHgSf1J42wpgyuHXs"
+api_key_real    = "x"
+api_secret_real = "x"
 
 client = Client(api_key_real, api_secret_real)
 
